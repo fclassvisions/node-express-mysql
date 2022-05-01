@@ -1,7 +1,9 @@
 const express = require("express");
 const mysql = require("mysql2");
+const cors = require("cors");
 require("dotenv").config();
 
+const PORT = process.env.PORT;
 const app = express();
 const pool = mysql.createPool({
   host: process.env.HOST,
@@ -11,6 +13,7 @@ const pool = mysql.createPool({
   connectionLimit: 10,
 });
 
+app.use(cors());
 app.use(express.json());
 
 app.post("/ticket", (req, res) => {
@@ -30,11 +33,12 @@ app.post("/ticket", (req, res) => {
   );
 });
 
-app.put("/ticket", (req, res) => {
+app.put("/ticket/:id", (req, res) => {
+  const id = req.params.id;
   const ticket = req.body;
   pool.query(
     "update ticket set ? where id = ?",
-    [ticket, ticket.id],
+    [ticket, id],
     (error, result) => {
       if (error) {
         console.error(error);
@@ -85,6 +89,6 @@ app.get("/ticket/:id", (req, res) => {
   });
 });
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
 });
