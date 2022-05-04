@@ -28,7 +28,7 @@ app.post("/ticket", (req, res) => {
         return;
       }
 
-      res.send({ id: result.insertId, ...ticket });
+      res.send({ ...ticket, id: result.insertId });
     }
   );
 });
