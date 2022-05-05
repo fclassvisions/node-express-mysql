@@ -46,7 +46,7 @@ app.put("/ticket/:id", (req, res) => {
         return;
       }
 
-      res.send(ticket);
+      res.send({ ...ticket, id });
     }
   );
 });
