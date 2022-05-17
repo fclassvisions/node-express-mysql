@@ -60,7 +60,7 @@ app.delete("/ticket/:id", (req, res) => {
       return;
     }
 
-    res.send("Success");
+    res.send({ message: "Success" });
   });
 });
 
